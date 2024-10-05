@@ -1,0 +1,28 @@
+name: CI Workflow
+
+on:
+  push:
+    branches:
+      - main  # Déclenche le workflow lors d'un push sur la branche main
+  pull_request:
+    branches:
+      - main  # Déclenche le workflow lors d'une pull request vers la branche main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest  # Utilise un environnement Ubuntu
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2  # Récupère le code source du dépôt
+
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          java-version: '17'  # Remplacez par la version de Java que vous utilisez
+
+      - name: Build with Maven
+        run: mvn clean install  # Exécute la commande Maven pour construire le projet
+
+      - name: Run tests
+        run: mvn test  # Exécute les tests définis dans votre projet
